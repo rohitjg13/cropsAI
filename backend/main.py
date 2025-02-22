@@ -1,13 +1,20 @@
+import shutil
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from PIL import Image, UnidentifiedImageError
+from PIL import Image, UnidentifiedImageError, ImageDraw
 from transformers import ViTImageProcessor, ViTForImageClassification
 from google import genai
 from google.genai import types
 from dotenv import load_dotenv
 import os
 import io
+import base64
 from inference_sdk import InferenceHTTPClient
+from icrawler.builtin import GoogleImageCrawler
+
+async def search_image(query):
+    google_Crawler = GoogleImageCrawler(storage = {'root_dir': r'imgs'})
+    google_Crawler.crawl(keyword = query, max_num = 1)
 
 app = Flask(__name__)
 CORS(app)
@@ -23,7 +30,7 @@ model = ViTForImageClassification.from_pretrained(
 client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
 
 @app.route('/cropPrediction', methods=['POST'])
-def crop_prediction():
+async def crop_prediction():
     try:
         if 'image' not in request.files:
             return jsonify({'error': 'No image file provided'}), 400
@@ -67,28 +74,60 @@ def crop_prediction():
         data = response.text
         data = data[data.find('{'):data.rfind('}')+1]
         data = eval(data)
-        
+        await search_image(data["crop_name"])
+        with open("imgs/000001.jpg", "rb") as file:
+            img_str = base64.b64encode(file.read()).decode("utf-8")
+        shutil.rmtree("imgs")  # remove the directory and its contents
+        data["image"] = img_str
         return jsonify(data)
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 @app.route('/animalPrediction', methods=['POST'])
-def animal_prediction():
-    # Animal disease classification
-    CLIENT = InferenceHTTPClient(
-        api_url="https://detect.roboflow.com",
-        api_key="MZtwASv2WPuqtGURnJdS"
-    )
-    file = request.files['image']
-    image = Image.open(io.BytesIO(file.read()))
+async def animal_prediction():
+    try:
+        CLIENT = InferenceHTTPClient(
+            api_url="https://detect.roboflow.com",
+            api_key=os.getenv('ROBOFLOW_API_KEY')
+        )
+        file = request.files['image']
+        image = Image.open(io.BytesIO(file.read()))
 
-    result = CLIENT.infer(image, model_id="animal-skin-disease/2")
-    animal_prediction = result["predictions"][0]["class"]
-    print(result, animal_prediction)
+        result = CLIENT.infer(image, model_id="animal-skin-disease/2")
+        prediction = result["predictions"][0]
+        animal_prediction = prediction["class"]
 
-    # Gemini prompt
-    prompt = f'''Given an image of an animal and the disease name, provide a structured JSON output with detailed information. Extract relevant data and format it as follows:
+        # Get bounding box values
+        x = prediction["x"]
+        y = prediction["y"]
+        width = prediction["width"]
+        height = prediction["height"]
+
+        # Ensure the image has an alpha channel for transparency
+        if image.mode != 'RGBA':
+            image = image.convert('RGBA')
+        
+        # Create an overlay image for the translucent bounding box
+        overlay = Image.new('RGBA', image.size, (0, 0, 0, 0))
+        overlay_draw = ImageDraw.Draw(overlay)
+        
+        translucent_red = (255, 0, 0, 50)
+        solid_red = (255, 0, 0)
+        
+        # Draw rectangle on the overlay
+        overlay_draw.rectangle([(x, y), (x + width, y + height)], fill=translucent_red, outline=solid_red, width=3)
+        
+        # Composite the overlay with the original image
+        composite = Image.alpha_composite(image, overlay)
+
+        # Convert the composited image to a base64 string (using PNG to preserve transparency)
+        buffered = io.BytesIO()
+        composite.save(buffered, format="PNG")
+        img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
+
+        # Gemini prompt
+        prompt = f'''Given an image of an animal and the disease name, provide a structured JSON output with detailed information. Extract relevant data and format it as follows:
             {{
             "animal_name": "<Name of the animal>",
             "animal_description": "<A short description about the animal>",
@@ -109,15 +148,23 @@ def animal_prediction():
             "recovery_time": "<Expected recovery duration>",
             "veterinary_consultation": "<When to seek professional help>"
             }}
-    '''
-    response = client.models.generate_content(
+        '''
+        response = client.models.generate_content(
             model="gemini-2.0-flash",
             contents=[prompt, image])
+        data = response.text
+        data = data[data.find('{'):data.rfind('}')+1]
+        data = eval(data)
+        return jsonify({
+            "annotated_image": img_str,
+            "data": data
+        }), 200
 
-    data = response.text
-    data = data[data.find('{'):data.rfind('}')+1]
-    data = eval(data)
-    return jsonify({"result": result, "disease_name": animal_prediction, "data": data}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=6942)
+
+
+
