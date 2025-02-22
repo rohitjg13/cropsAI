@@ -1,8 +1,11 @@
 'use client';
 
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import Image from 'next/image';
+import { DisplayData } from "./data";
+import { TopBar,BottomBar } from "./static";
 
 export default function Home() {
     const [pic,updatePic] = useState<string>("");
@@ -15,11 +18,18 @@ export default function Home() {
     };
     return (
         <div className="flex flex-col h-screen w-screen items-center justify-center">
-            <Input type="file" accept="image/*" onChange={handleImageChange} className="w-48"/>
-            {pic && (
-                <Image alt="crop pic" src={pic} width={100} height={100}></Image>
-            )
-            }
+            <TopBar />
+            <div className="flex flex-col gap-4">
+                <div className="w-screen flex justify-center">
+                    { pic && (<Image alt="crop pic" src={pic} width={200} height={200} style={{objectFit:"cover"}} />) }
+                </div>
+                <div className="flex w-screen justify-center gap-4">
+                    <Input type="file" accept="image/*" onChange={handleImageChange} className="w-48"/>
+                    <Button onClick={() => {}} className="text-sm">Continue</Button>
+                </div>
+            </div>
+            <DisplayData/>
+            <BottomBar />
         </div>
     );
 }
