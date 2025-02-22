@@ -226,30 +226,72 @@ const Animalcards = [
       content: function() {
         return (
           <>
-            <p><b>Animal Name:</b> {this.animal_name}</p>
-            <p><b>Animal Description:</b> {this.animal_description}</p>
-  
-            <p><b>Disease Name:</b> {this.disease_name}</p>
-            <p><b>Disease Description:</b> {this.disease_description}</p>
-  
-            <p><b>Causes:</b> {this.causes}</p>
-            <p><b>Symptoms:</b> {this.symptoms}</p>
-            <p><b>Prevention Measures:</b> {this.prevention_measures}</p>
-  
-            <p><b>Treatment:</b></p>
-            <ul>
-              <li><b>Medications:</b> {this.treatment.medications}</li>
-              <li><b>Vaccinations:</b> {this.treatment.vaccinations}</li>
-              <li><b>Natural Remedies:</b> {this.treatment.natural_remedies}</li>
-            </ul>
-  
-            <p><b>Transmission:</b> {this.transmission}</p>
-            <p><b>Risk Factors:</b> {this.risk_factors}</p>
-            <p><b>Affected Species:</b> {this.affected_species}</p>
-            <p><b>Quarantine Measures:</b> {this.quarantine_measures}</p>
-            <p><b>Recovery Time:</b> {this.recovery_time}</p>
-            <p><b>Veterinary Consultation:</b> {this.veterinary_consultation}</p>
-            <p><b>Nearby Vets:</b> {this.nearby_vets}</p>
+            <div className="space-y-4">
+            <div className="flex flex-col">
+                <span className="font-bold">Animal Name:</span> {this.animal_name}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Animal Description:</span> {this.animal_description}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Disease Name:</span> {this.disease_name}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Disease Description:</span> {this.disease_description}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Causes:</span> {this.causes}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Symptoms:</span> {this.symptoms}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Prevention Measures:</span> {this.prevention_measures}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Treatment:</span>
+                <ul className="list-disc pl-5">
+                <li><span className="font-bold">Medications:</span> {this.treatment.medications}</li>
+                <li><span className="font-bold">Vaccinations:</span> {this.treatment.vaccinations}</li>
+                <li><span className="font-bold">Natural Remedies:</span> {this.treatment.natural_remedies}</li>
+                </ul>
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Transmission:</span> {this.transmission}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Risk Factors:</span> {this.risk_factors}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Affected Species:</span> {this.affected_species}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Quarantine Measures:</span> {this.quarantine_measures}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Recovery Time:</span> {this.recovery_time}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Veterinary Consultation:</span> {this.veterinary_consultation}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Nearby Vets:</span> {this.nearby_vets}
+            </div>
+            </div>
           </>
         );
       }
@@ -277,30 +319,72 @@ const Animalcards = [
       content: function() {
         return (
           <>
-            <p><b>Animal Name:</b> {this.animal_name}</p>
-            <p><b>Animal Description:</b> {this.animal_description}</p>
-  
-            <p><b>Disease Name:</b> {this.disease_name}</p>
-            <p><b>Disease Description:</b> {this.disease_description}</p>
-  
-            <p><b>Causes:</b> {this.causes}</p>
-            <p><b>Symptoms:</b> {this.symptoms}</p>
-            <p><b>Prevention Measures:</b> {this.prevention_measures}</p>
-  
-            <p><b>Treatment:</b></p>
-            <ul>
-              <li><b>Medications:</b> {this.treatment.medications}</li>
-              <li><b>Vaccinations:</b> {this.treatment.vaccinations}</li>
-              <li><b>Natural Remedies:</b> {this.treatment.natural_remedies}</li>
-            </ul>
-  
-            <p><b>Transmission:</b> {this.transmission}</p>
-            <p><b>Risk Factors:</b> {this.risk_factors}</p>
-            <p><b>Affected Species:</b> {this.affected_species}</p>
-            <p><b>Quarantine Measures:</b> {this.quarantine_measures}</p>
-            <p><b>Recovery Time:</b> {this.recovery_time}</p>
-            <p><b>Veterinary Consultation:</b> {this.veterinary_consultation}</p>
-            <p><b>Nearby Vets:</b> {this.nearby_vets}</p>
+            <div className="space-y-4">
+            <div className="flex flex-col">
+                <span className="font-bold">Animal Name:</span> {this.animal_name}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Animal Description:</span> {this.animal_description}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Disease Name:</span> {this.disease_name}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Disease Description:</span> {this.disease_description}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Causes:</span> {this.causes}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Symptoms:</span> {this.symptoms}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Prevention Measures:</span> {this.prevention_measures}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Treatment:</span>
+                <ul className="list-disc pl-5">
+                <li><span className="font-bold">Medications:</span> {this.treatment.medications}</li>
+                <li><span className="font-bold">Vaccinations:</span> {this.treatment.vaccinations}</li>
+                <li><span className="font-bold">Natural Remedies:</span> {this.treatment.natural_remedies}</li>
+                </ul>
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Transmission:</span> {this.transmission}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Risk Factors:</span> {this.risk_factors}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Affected Species:</span> {this.affected_species}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Quarantine Measures:</span> {this.quarantine_measures}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Recovery Time:</span> {this.recovery_time}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Veterinary Consultation:</span> {this.veterinary_consultation}
+            </div>
+
+            <div className="flex flex-col">
+                <span className="font-bold">Nearby Vets:</span> {this.nearby_vets}
+            </div>
+            </div>
           </>
         );
       }

@@ -107,6 +107,7 @@ export default function ExpandableCardPlants() {
                     Link
                   </motion.a>
                 </div>
+                
                 <div className="w-full max-w-[500px] h-[100vh] flex flex-col bg-purple-300 dark:bg-neutral-900 sm:rounded-3xl overflow-hidden pl-4 pr-4 ">
                   <motion.div
                     layout
@@ -222,26 +223,56 @@ const Plantcards = [
     content: function() {
       return (
         <>
-          <p><b>Crop Name:</b> {this.crop_name}</p>
-          <p><b>Crop Description:</b> {this.crop_description}</p>
+          <div className="space-y-4">
+            <div className="flex flex-col">
+              <span className="font-bold">Crop Name:</span> {this.crop_name}
+            </div>
 
-          <p><b>Disease Name:</b> {this.disease_name}</p>
-          <p><b>Disease Description:</b> {this.disease_description}</p>
+            <div className="flex flex-col">
+              <span className="font-bold">Crop Description:</span> {this.crop_description}
+            </div>
 
-          <p><b>Causes:</b> {this.causes}</p>
-          <p><b>Symptoms:</b> {this.symptoms}</p>
-          <p><b>Prevention Measures:</b> {this.prevention_measures}</p>
+            <div className="flex flex-col">
+              <span className="font-bold">Disease Name:</span> {this.disease_name}
+            </div>
 
-          <p><b>Treatment:</b></p>
-            <ul>
-              <li><b>Fertilizers:</b> {this.treatment.fertilizers}</li>
-              <li><b>Pesticides:</b> {this.treatment.pesticides}</li>
-              <li><b>Biological Control:</b> {this.treatment.biological_control}</li>
-            </ul>
+            <div className="flex flex-col">
+              <span className="font-bold">Disease Description:</span> {this.disease_description}
+            </div>
 
-          <p><b>Climatic Factors:</b> {this.climatic_factors}</p>
-          <p><b>Soil Requirements:</b> {this.soil_requirements}</p>
-          <p><b>Crop Rotation Suggestions:</b> {this.crop_rotation_suggestions}</p>
+            <div className="flex flex-col">
+              <span className="font-bold">Causes:</span> {this.causes}
+            </div>
+
+            <div className="flex flex-col">
+              <span className="font-bold">Symptoms:</span> {this.symptoms}
+            </div>
+
+            <div className="flex flex-col">
+              <span className="font-bold">Prevention Measures:</span> {this.prevention_measures}
+            </div>
+
+            <div className="flex flex-col">
+              <span className="font-bold">Treatment:</span>
+              <ul className="list-disc pl-5">
+                <li><span className="font-bold">Fertilizers:</span> {this.treatment.fertilizers}</li>
+                <li><span className="font-bold">Pesticides:</span> {this.treatment.pesticides}</li>
+                <li><span className="font-bold">Biological Control:</span> {this.treatment.biological_control}</li>
+              </ul>
+            </div>
+
+            <div className="flex flex-col">
+              <span className="font-bold">Climatic Factors:</span> {this.climatic_factors}
+            </div>
+
+            <div className="flex flex-col">
+              <span className="font-bold">Soil Requirements:</span> {this.soil_requirements}
+            </div>
+
+            <div className="flex flex-col">
+              <span className="font-bold">Crop Rotation Suggestions:</span> {this.crop_rotation_suggestions}
+            </div>
+          </div>
         </>
       );
     }
@@ -265,26 +296,56 @@ const Plantcards = [
     content: function() {
       return(
         <>
-          <p><b>Crop Name:</b> {this.crop_name}</p>
-          <p><b>Crop Description:</b> {this.crop_description}</p>
+          <div className="space-y-4">
+            <div className="flex flex-col">
+              <span className="font-bold">Crop Name:</span> {this.crop_name}
+            </div>
 
-          <p><b>Disease Name:</b> {this.disease_name}</p>
-          <p><b>Disease Description:</b> {this.disease_description}</p>
+            <div className="flex flex-col">
+              <span className="font-bold">Crop Description:</span> {this.crop_description}
+            </div>
 
-          <p><b>Causes:</b> {this.causes}</p>
-          <p><b>Symptoms:</b> {this.symptoms}</p>
-          <p><b>Prevention Measures:</b> {this.prevention_measures}</p>
+            <div className="flex flex-col">
+              <span className="font-bold">Disease Name:</span> {this.disease_name}
+            </div>
 
-          <p><b>Treatment:</b></p>
-            <ul>
-              <li><b>Fertilizers:</b> {this.treatment.fertilizers}</li>
-              <li><b>Pesticides:</b> {this.treatment.pesticides}</li>
-              <li><b>Biological Control:</b> {this.treatment.biological_control}</li>
-            </ul>
+            <div className="flex flex-col">
+              <span className="font-bold">Disease Description:</span> {this.disease_description}
+            </div>
 
-          <p><b>Climatic Factors:</b> {this.climatic_factors}</p>
-          <p><b>Soil Requirements:</b> {this.soil_requirements}</p>
-          <p><b>Crop Rotation Suggestions:</b> {this.crop_rotation_suggestions}</p>
+            <div className="flex flex-col">
+              <span className="font-bold">Causes:</span> {this.causes}
+            </div>
+
+            <div className="flex flex-col">
+              <span className="font-bold">Symptoms:</span> {this.symptoms}
+            </div>
+
+            <div className="flex flex-col">
+              <span className="font-bold">Prevention Measures:</span> {this.prevention_measures}
+            </div>
+
+            <div className="flex flex-col">
+              <span className="font-bold">Treatment:</span>
+              <ul className="list-disc pl-5">
+                <li><span className="font-bold">Fertilizers:</span> {this.treatment.fertilizers}</li>
+                <li><span className="font-bold">Pesticides:</span> {this.treatment.pesticides}</li>
+                <li><span className="font-bold">Biological Control:</span> {this.treatment.biological_control}</li>
+              </ul>
+            </div>
+
+            <div className="flex flex-col">
+              <span className="font-bold">Climatic Factors:</span> {this.climatic_factors}
+            </div>
+
+            <div className="flex flex-col">
+              <span className="font-bold">Soil Requirements:</span> {this.soil_requirements}
+            </div>
+
+            <div className="flex flex-col">
+              <span className="font-bold">Crop Rotation Suggestions:</span> {this.crop_rotation_suggestions}
+            </div>
+          </div>
         </>
       );
     }
