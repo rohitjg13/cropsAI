@@ -134,7 +134,7 @@ export default function ExpandableCardPlants({ cards: initialCards }: Expandable
             <motion.div
               layoutId={`card-${active.disease_name}-${id}`}
               ref={ref}
-              className="w-full max-w-[500px] h-full md:h-fit md:max-h-[90%] flex flex-col bg-white dark:bg-neutral-900 sm:rounded-3xl overflow-hidden shadow-lg"
+              className="w-full max-w-[500px] h-full md:h-fit md:max-h-[80%] flex flex-col bg-white dark:bg-neutral-900 sm:rounded-3xl overflow-hidden shadow-lg"
             >
               <motion.div layoutId={`image-${active.disease_name}-${id}`}>
                 <Image
@@ -143,7 +143,7 @@ export default function ExpandableCardPlants({ cards: initialCards }: Expandable
                   height={200}
                   src={active.image}
                   alt={active.disease_name}
-                  className="w-full h-80 lg:h-80 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"
+                  className="w-full h-60 lg:h-60 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"
                 />
               </motion.div>
               <div>
@@ -157,7 +157,7 @@ export default function ExpandableCardPlants({ cards: initialCards }: Expandable
                     </motion.h3>
                     <motion.p
                       layoutId={`description-${active.disease_description}-${id}`}
-                      className="text-neutral-600 dark:text-neutral-400 text-xl"
+                      className="text-neutral-600 dark:text-neutral-400 text-sm mt-2"
                     >
                       {active.disease_description}
                     </motion.p>
@@ -177,7 +177,7 @@ export default function ExpandableCardPlants({ cards: initialCards }: Expandable
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="text-neutral-600 dark:text-neutral-400 text-lg md:text-xl h-[40vh] md:h-fit pb-10 flex flex-col items-start gap-4 overflow-auto"
+                    className="text-neutral-600 dark:text-neutral-400 text-lg md:text-xl max-h-[50vh] pb-8 flex flex-col items-start gap-4 overflow-auto"
                   >
                     {active.content ? active.content() : <DefaultCardContent card={active} />}
                   </motion.div>
@@ -215,7 +215,7 @@ export default function ExpandableCardPlants({ cards: initialCards }: Expandable
                 </motion.h3>
                 <motion.p
                   layoutId={`description-${card.disease_description}-${id}`}
-                  className="text-neutral-600 dark:text-neutral-400 text-center md:text-left text-lg"
+                  className="text-neutral-600 dark:text-neutral-400 text-center md:text-left text-lg line-clamp-2"
                 >
                   {card.disease_description}
                 </motion.p>

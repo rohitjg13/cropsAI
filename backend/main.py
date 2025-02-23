@@ -52,7 +52,7 @@ async def crop_prediction():
             "crop_name": "<Name of the crop>",
             "crop_description": "<A short description about the crop>",
             "disease_name": "{predicted_class_formatted}",
-            "disease_description": "<Detailed description of the disease>",
+            "disease_description": "<Very short description of the disease>",
             "causes": "<Main causes of the disease>",
             "symptoms": "<Key symptoms visible on the crop>",
             "prevention_measures": "<Methods to prevent the disease>",
