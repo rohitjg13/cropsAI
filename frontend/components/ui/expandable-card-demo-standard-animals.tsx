@@ -5,10 +5,32 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/use-outside-click";
 
 const HOST = "127.0.0.1:6942";
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function ExpandableCardAnimals({ cards: initialCards }: { cards?: any[] }) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [active, setActive] = useState<any>(null);
+
+interface AnimalCard {
+  disease_name: string;
+  animal_name: string;
+  image: string;
+  disease_description: string;
+  animal_description?: string;
+  causes?: string;
+  symptoms?: string;
+  prevention_measures?: string;
+  treatment?: {
+    medications?: string[];
+    vaccinations?: string[];
+    natural_remedies?: string[];
+  };
+  transmission?: string;
+  risk_factors?: string;
+  affected_species?: string[];
+  quarantine_measures?: string;
+  recovery_time?: string;
+  veterinary_consultation?: string;
+  content?: React.ReactNode;
+}
+
+export default function ExpandableCardAnimals({ cards: initialCards }: { cards?: AnimalCard[] }) {
+  const [active, setActive] = useState<AnimalCard | null>(null);
   const ref = useRef<HTMLDivElement>(null!);
   const id = useId();
 
@@ -25,11 +47,8 @@ export default function ExpandableCardAnimals({ cards: initialCards }: { cards?:
 
   useOutsideClick(ref, () => setActive(null));
 
-  // Function to handle emailing the vet
-
-
   // Function to handle sending SMS to the vet using browser geolocation
-  const handleSmsVet = (card: any) => {
+  const handleSmsVet = (card: AnimalCard) => {
     const sendSms = (location: string) => {
       const payload = {
         disease_name: card.disease_name,
@@ -48,8 +67,8 @@ export default function ExpandableCardAnimals({ cards: initialCards }: { cards?:
             alert("Failed to send SMS.");
           }
         })
-        .catch(error => {
-          console.error("Error sending SMS:", error);
+        .catch(() => {
+          console.error("Error sending SMS");
           alert("An error occurred.");
         });
     };
@@ -61,8 +80,7 @@ export default function ExpandableCardAnimals({ cards: initialCards }: { cards?:
           const googleMapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
           sendSms(googleMapsLink);
         },
-        (error) => {
-          // Fallback to manual entry if geolocation fails or is denied
+        () => {
           const loc = window.prompt("Geolocation failed. Please enter your location manually (or provide a maps URL):");
           if (loc) {
             sendSms(loc);
@@ -151,7 +169,7 @@ export default function ExpandableCardAnimals({ cards: initialCards }: { cards?:
                     exit={{ opacity: 0 }}
                     className="text-neutral-600 dark:text-neutral-400 text-lg md:text-xl max-h-[50vh] pb-8 flex flex-col items-start gap-4 overflow-auto"
                   >
-                    {active.content ? active.content() : (
+                    {active.content ? active.content : (
                       <div className="space-y-3">
                         <p className="text-lg"><strong>Animal:</strong> {active.animal_name}</p>
                         <p className="text-lg"><strong>Description:</strong> {active.animal_description}</p>
@@ -200,7 +218,6 @@ export default function ExpandableCardAnimals({ cards: initialCards }: { cards?:
             onClick={() => setActive(card)}
             className="p-4 flex flex-row items-center border border-black hover:border-green-500 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer transition-all duration-200 w-full max-w-lg"
           >
-            {/* Image on the Left */}
             <motion.div layoutId={`image-${card.disease_name}-${id}`} className="flex-shrink-0">
               <Image
                 width={100}
@@ -210,8 +227,6 @@ export default function ExpandableCardAnimals({ cards: initialCards }: { cards?:
                 className="h-24 w-24 rounded-lg object-cover object-top"
               />
             </motion.div>
-            
-            {/* Text Content */}
             <div className="flex flex-col ml-4 flex-grow">
               <motion.h3
                 layoutId={`title-${card.disease_name}-${id}`}
@@ -225,8 +240,6 @@ export default function ExpandableCardAnimals({ cards: initialCards }: { cards?:
               >
                 {card.disease_description}
               </motion.p>
-              
-              {/* Contact Vet Button */}
               <motion.button
                 layoutId={`button-${card.disease_name}-${id}`}
                 onClick={() => setActive(card)}
