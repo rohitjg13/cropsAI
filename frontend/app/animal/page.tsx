@@ -86,7 +86,7 @@ export default function Home() {
       <main className="relative min-h-screen overflow-y-auto pt-[32px] pb-[32px] bg-white">
         <div className="flex flex-col items-center justify-center h-full gap-4 p-4">
           <div className="flex flex-col gap-4 w-full">
-            <div className="flex justify-center w-full">
+            <div className="flex justify-center w-full mt-8">
               <FileUpload onChange={handleFileUpload} />
             </div>
             <div className="flex justify-center w-full">
@@ -115,26 +115,26 @@ export default function Home() {
   );
 }
 
-const mockAnimalCardsData = [
-  {
-      animal_name: "Cow",
-      animal_description: "A large domesticated bovine commonly raised for milk and beef.",
-      disease_name: "Bovine Mastitis",
-      disease_description: "Inflammation of the cow's mammary gland caused by bacterial infection.",
-      causes: "Bacterial infection, poor hygiene, and teat injuries.",
-      symptoms: "Swollen udder, abnormal milk, and fever.",
-      prevention_measures: "Proper milking hygiene, regular cleaning, and vaccination.",
-      treatment: {
-          medications: ["Antibiotics", "Anti-inflammatory drugs"],
-          vaccinations: ["Mastitis Vaccine"],
-          natural_remedies: ["Herbal teas", "Probiotics"]
-      },
-      transmission: "Spread via milking equipment and contaminated hands.",
-      risk_factors: "Stress, poor nutrition, and unsanitary living conditions.",
-      affected_species: ["Cows"],
-      quarantine_measures: "Isolate infected animals and disinfect all equipment.",
-      recovery_time: "2-3 weeks with proper treatment.",
-      veterinary_consultation: "Seek veterinary advice immediately upon symptom detection.",
-      image: "/OIP.jpeg"
-  }
-]
+// const mockAnimalCardsData = [
+//   {
+//       animal_name: "Cow",
+//       animal_description: "A large domesticated bovine commonly raised for milk and beef.",
+//       disease_name: "Bovine Mastitis",
+//       disease_description: "Inflammation of the cow's mammary gland caused by bacterial infection.",
+//       causes: "Bacterial infection, poor hygiene, and teat injuries.",
+//       symptoms: "Swollen udder, abnormal milk, and fever.",
+//       prevention_measures: "Proper milking hygiene, regular cleaning, and vaccination.",
+//       treatment: {
+//           medications: ["Antibiotics", "Anti-inflammatory drugs"],
+//           vaccinations: ["Mastitis Vaccine"],
+//           natural_remedies: ["Herbal teas", "Probiotics"]
+//       },
+//       transmission: "Spread via milking equipment and contaminated hands.",
+//       risk_factors: "Stress, poor nutrition, and unsanitary living conditions.",
+//       affected_species: ["Cows"],
+//       quarantine_measures: "Isolate infected animals and disinfect all equipment.",
+//       recovery_time: "2-3 weeks with proper treatment.",
+//       veterinary_consultation: "Seek veterinary advice immediately upon symptom detection.",
+//       image: "/OIP.jpeg"
+//   }
+// ]

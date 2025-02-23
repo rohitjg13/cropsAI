@@ -91,7 +91,7 @@ export default function Home() {
       <main className="relative min-h-screen overflow-y-auto pt-[32px] pb-[32px] bg-white">
         <div className="flex flex-col items-center justify-center h-full gap-4 p-4">
           <div className="flex flex-col gap-4 w-full">
-            <div className="flex justify-center w-full">
+            <div className="mt-8 flex justify-center w-full">
               <FileUpload onChange={handleFileUpload} />
             </div>
             <div className="flex justify-center w-full">
