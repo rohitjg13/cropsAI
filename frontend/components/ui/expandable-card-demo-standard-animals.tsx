@@ -91,49 +91,6 @@ export default function ExpandableCardAnimals({ cards: initialCards }: { cards?:
                     Link
                   </motion.a>
                 </div>
-                <div className="pt-4 relative px-4">
-                  <motion.div
-                    layout
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="text-neutral-600 dark:text-neutral-400 text-lg md:text-xl max-h-[50vh] pb-8 flex flex-col items-start gap-4 overflow-auto"
-                  >
-                    {active.content ? active.content() : (
-                      <div className="space-y-3">
-                        <p className="text-lg"><strong>Animal:</strong> {active.animal_name}</p>
-                        <p className="text-lg"><strong>Description:</strong> {active.animal_description}</p>
-                        <p className="text-lg"><strong>Disease:</strong> {active.disease_name}</p>
-                        <p className="text-lg"><strong>Disease Description:</strong> {active.disease_description}</p>
-                        <p className="text-lg"><strong>Causes:</strong> {active.causes}</p>
-                        <p className="text-lg"><strong>Symptoms:</strong> {active.symptoms}</p>
-                        <p className="text-lg"><strong>Prevention Measures:</strong> {active.prevention_measures}</p>
-                        <div className="space-y-1">
-                          <p className="text-lg font-bold">Treatment:</p>
-                          <p className="text-lg">
-                            <strong>Medications:</strong> {active.treatment?.medications?.join(', ')}
-                          </p>
-                          <p className="text-lg">
-                            <strong>Vaccinations:</strong> {active.treatment?.vaccinations?.join(', ')}
-                          </p>
-                          <p className="text-lg">
-                            <strong>Natural Remedies:</strong> {active.treatment?.natural_remedies?.join(', ')}
-                          </p>
-                        </div>
-                        <p className="text-lg"><strong>Transmission:</strong> {active.transmission}</p>
-                        <p className="text-lg"><strong>Risk Factors:</strong> {active.risk_factors}</p>
-                        <p className="text-lg">
-                          <strong>Affected Species:</strong> {active.affected_species?.join(', ')}
-                        </p>
-                        <p className="text-lg"><strong>Quarantine Measures:</strong> {active.quarantine_measures}</p>
-                        <p className="text-lg"><strong>Recovery Time:</strong> {active.recovery_time}</p>
-                        <p className="text-lg">
-                          <strong>Veterinary Consultation:</strong> {active.veterinary_consultation}
-                        </p>
-                      </div>
-                    )}
-                  </motion.div>
-                </div>
               </div>
             </motion.div>
           </div>
@@ -146,39 +103,31 @@ export default function ExpandableCardAnimals({ cards: initialCards }: { cards?:
             layoutId={`card-${card.disease_name}-${id}`}
             key={`card-${card.disease_name}-${id}`}
             onClick={() => setActive(card)}
-            className="p-4 flex flex-col md:flex-row justify-between items-center border border-black hover:border-green-500 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer transition-all duration-200"
+            className="p-4 flex flex-row items-center border border-black hover:border-green-500 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer transition-all duration-200"
           >
-            <div className="flex gap-4 flex-col md:flex-row items-center">
-              <motion.div layoutId={`image-${card.disease_name}-${id}`}>
-                <Image
-                  width={100}
-                  height={100}
-                  src={card.image}
-                  alt={card.disease_name}
-                  className="h-40 w-40 md:h-14 md:w-14 rounded-lg object-cover object-top"
-                />
-              </motion.div>
-              <div>
-                <motion.h3
-                  layoutId={`title-${card.disease_name}-${id}`}
-                  className="font-medium text-neutral-800 dark:text-neutral-200 text-center md:text-left text-xl"
-                >
-                  {card.disease_name}
-                </motion.h3>
-                <motion.p
-                  layoutId={`description-${card.disease_description}-${id}`}
-                  className="text-neutral-600 dark:text-neutral-400 text-center md:text-left text-lg line-clamp-2"
-                >
-                  {card.disease_description}
-                </motion.p>
-              </div>
+            <motion.div layoutId={`image-${card.disease_name}-${id}`} className="flex-shrink-0">
+              <Image
+                width={80}
+                height={80}
+                src={card.image}
+                alt={card.disease_name}
+                className="h-20 w-20 rounded-lg object-cover object-top"
+              />
+            </motion.div>
+            <div className="ml-4 flex flex-col justify-center flex-grow">
+              <motion.h3
+                layoutId={`title-${card.disease_name}-${id}`}
+                className="font-medium text-neutral-800 dark:text-neutral-200 text-left text-lg"
+              >
+                {card.disease_name}
+              </motion.h3>
+              <motion.p
+                layoutId={`description-${card.disease_description}-${id}`}
+                className="text-neutral-600 dark:text-neutral-400 text-left text-sm line-clamp-2"
+              >
+                {card.disease_description}
+              </motion.p>
             </div>
-            <motion.button
-              layoutId={`button-${card.disease_name}-${id}`}
-              className="px-4 py-2 text-sm rounded-full font-bold bg-gray-100 hover:bg-green-500 hover:text-white text-black mt-4 md:mt-0"
-            >
-              Link
-            </motion.button>
           </motion.div>
         ))}
       </ul>
@@ -209,6 +158,3 @@ export const CloseIcon = () => {
     </motion.svg>
   );
 };
-
-
-

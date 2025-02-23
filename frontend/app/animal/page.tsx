@@ -89,7 +89,9 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          {animalCardsData.length > 0 && <ExpandableCardAnimals cards={animalCardsData} />}
+          {/* <div className="flex justify-center w-full mt-2 ml-4"><strong><u>Possible Causes: </u></strong></div> */}
+          <br />
+          {mockAnimalCardsData.length > 0 && <ExpandableCardAnimals cards={mockAnimalCardsData} />}
         </div>
       </main>
       <footer className="fixed bottom-0 left-0 right-0 z-50">
@@ -106,3 +108,27 @@ export default function Home() {
     </div>
   );
 }
+
+const mockAnimalCardsData = [
+  {
+      animal_name: "Cow",
+      animal_description: "A large domesticated bovine commonly raised for milk and beef.",
+      disease_name: "Bovine Mastitis",
+      disease_description: "Inflammation of the cow's mammary gland caused by bacterial infection.",
+      causes: "Bacterial infection, poor hygiene, and teat injuries.",
+      symptoms: "Swollen udder, abnormal milk, and fever.",
+      prevention_measures: "Proper milking hygiene, regular cleaning, and vaccination.",
+      treatment: {
+          medications: ["Antibiotics", "Anti-inflammatory drugs"],
+          vaccinations: ["Mastitis Vaccine"],
+          natural_remedies: ["Herbal teas", "Probiotics"]
+      },
+      transmission: "Spread via milking equipment and contaminated hands.",
+      risk_factors: "Stress, poor nutrition, and unsanitary living conditions.",
+      affected_species: ["Cows"],
+      quarantine_measures: "Isolate infected animals and disinfect all equipment.",
+      recovery_time: "2-3 weeks with proper treatment.",
+      veterinary_consultation: "Seek veterinary advice immediately upon symptom detection.",
+      image: "/OIP.jpeg"
+  }
+]
