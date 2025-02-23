@@ -16,6 +16,12 @@ const loadingStates = [
   { text: "Processing Image" },
   { text: "Almost there..." },
   { text: "Finalizing result" },
+  { text: "Hang tight, we're working our magic!" },
+  { text: "Almost there, just a moment longer..." },
+  { text: "Good things take a little time!" },
+  { text: "Stay tuned, finishing up!" },
+  { text: "Just a few more seconds..." },
+  { text: "Prepare to be amazed!" },
 ];
 
 export default function Home() {
@@ -91,7 +97,7 @@ export default function Home() {
           </div>
           {/* <div className="flex justify-center w-full mt-2 ml-4"><strong><u>Possible Causes: </u></strong></div> */}
           <br />
-          {mockAnimalCardsData.length > 0 && <ExpandableCardAnimals cards={mockAnimalCardsData} />}
+          {animalCardsData.length > 0 && <ExpandableCardAnimals cards={animalCardsData} />}
         </div>
       </main>
       <footer className="fixed bottom-0 left-0 right-0 z-50">
