@@ -26,32 +26,7 @@ export default function ExpandableCardAnimals({ cards: initialCards }: { cards?:
   useOutsideClick(ref, () => setActive(null));
 
   // Function to handle emailing the vet
-  const handleEmailVet = (card: any) => {
-    const location = window.prompt("Please enter your location:");
-    if (!location) return;
-    const payload = {
-      disease_name: card.disease_name,
-      animal_name: card.animal_name,
-      image: card.image,
-      location: location,
-    };
-    fetch(`http://${HOST}/emailVet`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    })
-      .then(response => {
-        if (response.ok) {
-          alert("Email sent to vet!");
-        } else {
-          alert("Failed to send email.");
-        }
-      })
-      .catch(error => {
-        console.error("Error sending email:", error);
-        alert("An error occurred.");
-      });
-  };
+
 
   // Function to handle sending SMS to the vet using browser geolocation
   const handleSmsVet = (card: any) => {
