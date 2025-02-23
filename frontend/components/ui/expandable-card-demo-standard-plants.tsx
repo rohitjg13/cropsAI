@@ -162,14 +162,6 @@ export default function ExpandableCardPlants({ cards: initialCards }: Expandable
                       {active.disease_description}
                     </motion.p>
                   </div>
-                  <motion.a
-                    layoutId={`button-${active.disease_name}-${id}`}
-                    href={active.link || "#"}
-                    target="_blank"
-                    className="px-4 py-3 text-sm rounded-full font-bold bg-green-500 text-white"
-                  >
-                    Link
-                  </motion.a>
                 </div>
                 <div className="pt-4 relative px-4">
                   <motion.div
@@ -221,14 +213,6 @@ export default function ExpandableCardPlants({ cards: initialCards }: Expandable
               >
                 {card.disease_description}
               </motion.p>
-              
-              {/* Link Button */}
-              <motion.button
-                layoutId={`button-${card.disease_name}-${id}`}
-                className="mt-2 px-4 py-2 text-sm rounded-lg ml-8 font-bold bg-green-500 hover:bg-green-500 hover:text-white text-black self-start"
-              >
-                Email
-              </motion.button>
             </div>
           </motion.div>
         ))}
