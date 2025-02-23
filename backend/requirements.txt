@@ -1,0 +1,11 @@
+flask
+flask-cors
+flask[async]
+pillow
+transformers
+google-genai
+python-dotenv
+inference-sdk
+icrawler
+torch
+torchvision

@@ -155,10 +155,8 @@ async def animal_prediction():
         data = response.text
         data = data[data.find('{'):data.rfind('}')+1]
         data = eval(data)
-        return jsonify({
-            "annotated_image": img_str,
-            "data": data
-        }), 200
+        data["image"] = img_str
+        return jsonify( data )
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
