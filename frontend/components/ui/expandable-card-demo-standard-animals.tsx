@@ -88,7 +88,7 @@ export default function ExpandableCardAnimals({ cards: initialCards }: { cards?:
                     target="_blank"
                     className="px-4 py-3 text-sm rounded-2xl font-bold bg-green-500 text-white"
                   >
-                    Link
+                    Email
                   </motion.a>
                 </div>
                 <div className="pt-4 relative px-4">
@@ -179,7 +179,7 @@ export default function ExpandableCardAnimals({ cards: initialCards }: { cards?:
                 layoutId={`button-${card.disease_name}-${id}`}
                 className="mt-2 px-4 py-2 text-sm rounded-lg ml-8 font-bold bg-green-500 hover:bg-green-500 hover:text-white text-black self-start"
               >
-                Link
+                Email
               </motion.button>
             </div>
           </motion.div>
