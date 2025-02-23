@@ -194,39 +194,42 @@ export default function ExpandableCardPlants({ cards: initialCards }: Expandable
             layoutId={`card-${card.disease_name}-${id}`}
             key={`card-${card.disease_name}-${id}`}
             onClick={() => setActive(card)}
-            className="p-4 flex flex-col md:flex-row justify-between items-center border border-black hover:border-green-500 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer transition-all duration-200"
+            className="p-4 flex flex-row items-center border border-black hover:border-green-500 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer transition-all duration-200 w-full max-w-lg"
           >
-            <div className="flex gap-4 flex-col md:flex-row items-center">
-              <motion.div layoutId={`image-${card.disease_name}-${id}`}>
-                <Image
-                  width={100}
-                  height={100}
-                  src={card.image}
-                  alt={card.disease_name}
-                  className="h-40 w-40 md:h-14 md:w-14 rounded-lg object-cover object-top"
-                />
-              </motion.div>
-              <div>
-                <motion.h3
-                  layoutId={`title-${card.disease_name}-${id}`}
-                  className="font-medium text-neutral-800 dark:text-neutral-200 text-center md:text-left text-xl"
-                >
-                  {card.disease_name}
-                </motion.h3>
-                <motion.p
-                  layoutId={`description-${card.disease_description}-${id}`}
-                  className="text-neutral-600 dark:text-neutral-400 text-center md:text-left text-lg line-clamp-2"
-                >
-                  {card.disease_description}
-                </motion.p>
-              </div>
+            {/* Image on the Left */}
+            <motion.div layoutId={`image-${card.disease_name}-${id}`} className="flex-shrink-0">
+              <Image
+                width={100}
+                height={100}
+                src={card.image}
+                alt={card.disease_name}
+                className="h-24 w-24 rounded-lg object-cover object-top"
+              />
+            </motion.div>
+            
+            {/* Text Content */}
+            <div className="flex flex-col ml-4 flex-grow">
+              <motion.h3
+                layoutId={`title-${card.disease_name}-${id}`}
+                className="font-medium text-neutral-800 dark:text-neutral-200 text-left text-lg"
+              >
+                {card.disease_name}
+              </motion.h3>
+              <motion.p
+                layoutId={`description-${card.disease_description}-${id}`}
+                className="text-neutral-600 dark:text-neutral-400 text-left text-sm line-clamp-2"
+              >
+                {card.disease_description}
+              </motion.p>
+              
+              {/* Link Button */}
+              <motion.button
+                layoutId={`button-${card.disease_name}-${id}`}
+                className="mt-2 px-4 py-2 text-sm rounded-lg ml-8 font-bold bg-green-500 hover:bg-green-500 hover:text-white text-black self-start"
+              >
+                Email
+              </motion.button>
             </div>
-            <motion.button
-              layoutId={`button-${card.disease_name}-${id}`}
-              className="px-4 py-2 text-sm rounded-full font-bold bg-gray-100 hover:bg-green-500 hover:text-white text-black mt-4 md:mt-0"
-            >
-              Link
-            </motion.button>
           </motion.div>
         ))}
       </ul>
