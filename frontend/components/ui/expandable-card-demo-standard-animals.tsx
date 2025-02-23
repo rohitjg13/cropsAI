@@ -4,7 +4,9 @@ import React, { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/use-outside-click";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function ExpandableCardAnimals({ cards: initialCards }: { cards?: any[] }) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [active, setActive] = useState<any>(null);
   const ref = useRef<HTMLDivElement>(null!);
   const id = useId();

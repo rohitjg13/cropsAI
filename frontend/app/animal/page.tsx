@@ -21,6 +21,7 @@ const loadingStates = [
 export default function Home() {
   const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [animalCardsData, setAnimalCardsData] = useState<any[]>([]);
 
   const handleFileUpload = (files: File[]) => {

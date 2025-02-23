@@ -40,6 +40,7 @@ export default function Home() {
   // Loading state for the loader UI
   const [loading, setLoading] = useState(false);
   // State for plant card data; initially no card is shown.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [plantCardsData, setPlantCardsData] = useState<any[]>([]);
 
   // Handle file selections
