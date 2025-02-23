@@ -46,7 +46,7 @@ export default function Home() {
     const formData = new FormData();
     formData.append("image", files[0]);
     try {
-      const response = await fetch("http://127.0.0.1:6942/animalPrediction", {
+      const response = await fetch("http://152.53.53.89:5000/animalPrediction", {
         method: "POST",
         body: formData,
       });

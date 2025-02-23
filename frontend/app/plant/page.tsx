@@ -55,7 +55,7 @@ export default function Home() {
     const formData = new FormData();
     formData.append('image', files[0]);
     try {
-      const response = await fetch("http://localhost:6942/cropPrediction", {
+      const response = await fetch("http://152.53.53.89:5000/cropPrediction", {
         method: "POST",
         body: formData,
       });
