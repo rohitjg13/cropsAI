@@ -4,6 +4,7 @@ import React, { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/use-outside-click";
 
+const HOST = "127.0.0.1:6942";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function ExpandableCardAnimals({ cards: initialCards }: { cards?: any[] }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,6 +24,83 @@ export default function ExpandableCardAnimals({ cards: initialCards }: { cards?:
   }, [active]);
 
   useOutsideClick(ref, () => setActive(null));
+
+  // Function to handle emailing the vet
+  const handleEmailVet = (card: any) => {
+    const location = window.prompt("Please enter your location:");
+    if (!location) return;
+    const payload = {
+      disease_name: card.disease_name,
+      animal_name: card.animal_name,
+      image: card.image,
+      location: location,
+    };
+    fetch(`http://${HOST}/emailVet`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+      .then(response => {
+        if (response.ok) {
+          alert("Email sent to vet!");
+        } else {
+          alert("Failed to send email.");
+        }
+      })
+      .catch(error => {
+        console.error("Error sending email:", error);
+        alert("An error occurred.");
+      });
+  };
+
+  // Function to handle sending SMS to the vet using browser geolocation
+  const handleSmsVet = (card: any) => {
+    const sendSms = (location: string) => {
+      const payload = {
+        disease_name: card.disease_name,
+        animal_name: card.animal_name,
+        location: location,
+      };
+      fetch(`http://${HOST}/smsVet`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+        .then(response => {
+          if (response.ok) {
+            alert("SMS sent to vet!");
+          } else {
+            alert("Failed to send SMS.");
+          }
+        })
+        .catch(error => {
+          console.error("Error sending SMS:", error);
+          alert("An error occurred.");
+        });
+    };
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const googleMapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+          sendSms(googleMapsLink);
+        },
+        (error) => {
+          // Fallback to manual entry if geolocation fails or is denied
+          const loc = window.prompt("Geolocation failed. Please enter your location manually (or provide a maps URL):");
+          if (loc) {
+            sendSms(loc);
+          }
+        }
+      );
+    } else {
+      const loc = window.prompt("Geolocation is not supported by your browser. Please enter your location manually (or provide a maps URL):");
+      if (loc) {
+        sendSms(loc);
+      }
+    }
+  };
 
   return (
     <>
@@ -82,14 +160,13 @@ export default function ExpandableCardAnimals({ cards: initialCards }: { cards?:
                       {active.disease_description}
                     </motion.p>
                   </div>
-                  <motion.a
+                  <motion.button
                     layoutId={`button-${active.disease_name}-${id}`}
-                    href={active.link || "#"}
-                    target="_blank"
+                    onClick={() => handleSmsVet(active)}
                     className="px-4 py-3 text-sm rounded-2xl font-bold bg-green-500 text-white"
                   >
-                    Link
-                  </motion.a>
+                    Contact Vet
+                  </motion.button>
                 </div>
                 <div className="pt-4 relative px-4">
                   <motion.div
@@ -174,12 +251,13 @@ export default function ExpandableCardAnimals({ cards: initialCards }: { cards?:
                 {card.disease_description}
               </motion.p>
               
-              {/* Link Button */}
+              {/* Contact Vet Button */}
               <motion.button
                 layoutId={`button-${card.disease_name}-${id}`}
+                onClick={() => setActive(card)}
                 className="mt-2 px-4 py-2 text-sm rounded-lg ml-8 font-bold bg-green-500 hover:bg-green-500 hover:text-white text-black self-start"
               >
-                Link
+                Contact Vet
               </motion.button>
             </div>
           </motion.div>
@@ -212,4 +290,3 @@ export const CloseIcon = () => {
     </motion.svg>
   );
 };
- 

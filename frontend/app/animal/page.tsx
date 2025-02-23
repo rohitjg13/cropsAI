@@ -8,6 +8,8 @@ import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 import { IconSquareRoundedX } from "@tabler/icons-react";
 import React, { useState } from "react";
 
+const HOST = "127.0.0.1:6942";
+
 const loadingStates = [
   { text: "Uploading Image" },
   { text: "Analyzing Image" },
@@ -53,7 +55,7 @@ export default function Home() {
     const formData = new FormData();
     formData.append("image", files[0]);
     try {
-      const response = await fetch("http://152.53.53.89:5000/animalPrediction", {
+      const response = await fetch(`http://${HOST}/animalPrediction`, {
         method: "POST",
         body: formData,
       });
