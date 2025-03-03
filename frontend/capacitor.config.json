@@ -1,0 +1,6 @@
+{
+  "appId": "com.srimanandrohit.cropAI",
+  "appName": "cropAI",
+  "webDir": "www",
+  "bundledWebRuntime": "false"
+}

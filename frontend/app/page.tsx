@@ -1,8 +1,13 @@
+'use client'
+
+import { useRouter } from "next/navigation";
+
 export default function Home() {
+    const router = useRouter();
     return (
         <div>
-            <p>Goto to /plant for plant info</p>
-            <p>Goto to /animal for animal info</p>
+            <button onClick={() => router.push("/plant")}>Goto to /plant for plant info</button>
+            <button onClick={() => router.push("/plant")}>Goto to /animal for animal info</button>
         </div>
     );
 }
