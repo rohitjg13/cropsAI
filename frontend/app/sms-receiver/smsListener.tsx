@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect } from 'react'
-import { LocalNotifications } from "@capacitor/local-notifications"
+import { useEffect } from "react";
+import { LocalNotifications } from "@capacitor/local-notifications";
+import { App } from "@capacitor/app";
 
 interface SmsData {
   sender: string;
@@ -11,45 +12,78 @@ interface SmsData {
 
 const SmsListener = () => {
   useEffect(() => {
+    const createNotificationChannel = async () => {
+      try {
+        await LocalNotifications.createChannel({
+          id: "sms_alerts",
+          name: "SMS Alerts",
+          description: "Notifications for incoming SMS messages",
+          importance: 4,
+          visibility: 1,
+          vibration: true,
+          sound: "default",
+        });
+        console.log("Notification channel created successfully");
+      } catch (error) {
+        console.error("Failed to create notification channel:", error);
+      }
+    };
+
+    createNotificationChannel();
+
+    LocalNotifications.addListener("localNotificationReceived", (notification) => {
+      console.log("Notification received:", notification);
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    App.addListener("appStateChange", (state: any) => {
+      console.log("App state changed:", state);
+    });
+
     const handleSmsReceived = (event: Event) => {
       try {
-        // Type guard to ensure it's a custom event
         if (!(event instanceof CustomEvent)) {
-          console.error('Not a custom event');
+          console.error("Not a custom event:", event);
           return;
         }
 
-        // Parse the detail as SmsData
-        const smsData: SmsData = JSON.parse(event.detail as string);
-        
-        // Create local notification
+        console.log("Raw SMS Event:", event.detail);
+
+        const smsData: SmsData = typeof event.detail === "string"
+          ? JSON.parse(event.detail)
+          : event.detail;
+
+        if (!smsData.sender || !smsData.body || !smsData.timestamp) {
+          console.error("Invalid SMS data:", smsData);
+          return;
+        }
+
+        console.log("Parsed SMS Data:", smsData);
+
         LocalNotifications.schedule({
           notifications: [
             {
               title: `SMS from ${smsData.sender}`,
               body: smsData.body,
-              id: Math.floor(smsData.timestamp),
-              schedule: { at: new Date(smsData.timestamp) },
-              sound: 'default',
-              channelId: 'sms_alerts',
+              id: Math.floor(Date.now() % 2147483647),
+              schedule: { at: new Date(Math.max(smsData.timestamp + 5000, Date.now() + 5000)) },
+              sound: "default",
+              channelId: "sms_alerts",
             }
           ]
         }).catch(error => {
-          console.error('Failed to schedule notification:', error);
+          console.error("Failed to schedule notification:", error);
         });
 
-        console.log('SMS Notification Created:', smsData);
       } catch (error) {
-        console.error('Error processing SMS:', error);
+        console.error("Error processing SMS:", error);
       }
     };
 
-    // Add event listener
-    window.addEventListener('smsReceived', handleSmsReceived);
+    window.addEventListener("smsReceived", handleSmsReceived);
 
-    // Cleanup
     return () => {
-      window.removeEventListener('smsReceived', handleSmsReceived);
+      window.removeEventListener("smsReceived", handleSmsReceived);
     };
   }, []);
 
