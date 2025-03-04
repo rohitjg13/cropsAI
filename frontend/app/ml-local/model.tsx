@@ -43,7 +43,7 @@ const TransactionExtractor = () => {
         ];
         const extractedInfo : ExtractedInfo[] = [];
         for(const question of questions) {
-            const result = await (await model).findAnswers(question, text);
+            const result = await model.findAnswers(question, text);
             extractedInfo.push({question: question, answer: result[0]?.text || "Not found"});
         }
         setResponse(extractedInfo);
