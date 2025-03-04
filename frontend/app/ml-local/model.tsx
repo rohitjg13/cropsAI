@@ -50,13 +50,24 @@ const TransactionExtractor = () => {
     }
 
     return (
-        <div>
-            <textarea onChange={(e) => analyzeText(e.target.value)} placeholder="Paste SMS here..."></textarea>
+        <div className="mt-8 w-full max-w-md p-4 bg-white rounded-lg shadow-md">
+            <textarea 
+                onChange={(e) => analyzeText(e.target.value)} 
+                placeholder="Paste SMS here..." 
+                className="w-full h-32 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+            {response.length <= 0 && (
+                <div className="mt-4 flex justify-center">
+                    <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                </div>
+            )}
             {response.length > 0 && (
-                <ul>
-                {response.map((item, index) => (
-                    <li key={index}><strong>{item.question}</strong>: {item.answer}</li>
-                ))}
+                <ul className="mt-4 space-y-2">
+                    {response.map((item, index) => (
+                        <li key={index} className="p-2 bg-gray-100 rounded-lg">
+                            <strong className="text-blue-600">{item.question}</strong>: {item.answer}
+                        </li>
+                    ))}
                 </ul>
             )}
         </div>
