@@ -1,4 +1,4 @@
-package com.example.app;
+package com.srimanandrohit.cropAI;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,6 +14,8 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 
 @CapacitorPlugin(name = "SmsReceiver")
 public class SmsReceiver extends BroadcastReceiver {
+    private static final String TAG = "SmsReceiver";
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if ("android.provider.Telephony.SMS_RECEIVED".equals(intent.getAction())) {
@@ -22,16 +24,40 @@ public class SmsReceiver extends BroadcastReceiver {
                 Object[] pdus = (Object[]) bundle.get("pdus");
                 if (pdus != null) {
                     for (Object pdu : pdus) {
-                        SmsMessage message = SmsMessage.createFromPdu((byte[]) pdu);
+                        SmsMessage message;
+                        
+                        // Handle different Android versions
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                            message = SmsMessage.createFromPdu((byte[]) pdu, bundle.getString("format"));
+                        } else {
+                            message = SmsMessage.createFromPdu((byte[]) pdu);
+                        }
+
                         String sender = message.getOriginatingAddress();
                         String body = message.getMessageBody();
-                        Log.d("SmsReceiver", "SMS from: " + sender + " - " + body);
+                        
+                        Log.d(TAG, "SMS Received - From: " + sender + ", Body: " + body);
 
-                        // Call Capacitor Plugin
-                        JSObject ret = new JSObject();
-                        ret.put("sender", sender);
-                        ret.put("body", body);
-                        Bridge.getInstance().triggerWindowJSEvent("smsReceived", ret.toString());
+                        try {
+                            // Create JSObject with SMS details
+                            JSObject smsData = new JSObject();
+                            smsData.put("sender", sender);
+                            smsData.put("body", body);
+                            smsData.put("timestamp", System.currentTimeMillis());
+
+                            // Trigger a JavaScript event
+                            Bridge bridge = Bridge.getInstance();
+                            if (bridge != null) {
+                                bridge.triggerWindowJSEvent("smsReceived", smsData.toString());
+                            } else {
+                                Log.e(TAG, "Bridge is null. Cannot trigger event.");
+                            }
+                        } catch (Exception e) {
+                            Log.e(TAG, "Error processing SMS", e);
+                        }
+
+                        // Abort broadcast to prevent other apps from receiving the SMS
+                        abortBroadcast();
                     }
                 }
             }
