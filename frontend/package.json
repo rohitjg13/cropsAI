@@ -15,6 +15,7 @@
     "@capacitor/push-notifications": "^7.0.0",
     "@radix-ui/react-navigation-menu": "^1.2.5",
     "@radix-ui/react-slot": "^1.1.2",
+    "@solimanware/capacitor-sms-reader": "^5.0.3",
     "@tabler/icons-react": "^3.30.0",
     "@tensorflow-models/qna": "^1.0.2",
     "@tensorflow/tfjs": "^4.22.0",

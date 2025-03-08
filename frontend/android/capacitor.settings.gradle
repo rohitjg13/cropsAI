@@ -10,3 +10,6 @@ project(':capacitor-local-notifications').projectDir = new File('../node_modules
 
 include ':capacitor-push-notifications'
 project(':capacitor-push-notifications').projectDir = new File('../node_modules/@capacitor/push-notifications/android')
+
+include ':solimanware-capacitor-sms-reader'
+project(':solimanware-capacitor-sms-reader').projectDir = new File('../node_modules/@solimanware/capacitor-sms-reader/android')
