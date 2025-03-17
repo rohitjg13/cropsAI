@@ -1,17 +1,77 @@
 'use client'
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { App } from "@capacitor/app";
 import { Capacitor } from "@capacitor/core";
+import { registerPlugin } from '@capacitor/core';
 
+// Define SMS message interface
 interface SmsData {
   sender: string;
   body: string;
   timestamp: number;
 }
 
+// Define interface for plugin methods
+interface SmsPluginInterface {
+  fetchMessages(): Promise<{ messages: SmsData[] }>;
+  hasSmsPermissions(): Promise<{ granted: boolean }>;
+  requestSmsPermissions(): Promise<{ granted: boolean }>;
+}
+
+// Register the plugin
+const SmsPlugin = registerPlugin<SmsPluginInterface>('SmsPlugin');
+
+// Component to handle SMS functionality
 const SmsListener = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [smsMessages, setSmsMessages] = useState<SmsData[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isLoading, setIsLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [error, setError] = useState<string | null>(null);
+
+  // Function to fetch SMS messages
+  const fetchMessages = async () => {
+    try {
+      // Check if we're on a native platform
+      if (!Capacitor.isNativePlatform()) {
+        console.warn("SMS features only work on mobile platforms");
+        return;
+      }
+      
+      setIsLoading(true);
+      setError(null);
+      
+      // Check permissions first
+      const permissionStatus = await SmsPlugin.hasSmsPermissions();
+      
+      if (!permissionStatus.granted) {
+        console.log("Requesting SMS permissions...");
+        const requestResult = await SmsPlugin.requestSmsPermissions();
+        if (!requestResult.granted) {
+          setError("SMS permissions not granted");
+          setIsLoading(false);
+          return;
+        }
+      }
+      
+      // Fetch messages
+      console.log("Fetching SMS messages...");
+      const result = await SmsPlugin.fetchMessages();
+      
+      console.log(`Fetched ${result.messages.length} SMS messages`);
+      setSmsMessages(result.messages);
+      
+    } catch (err) {
+      console.error("Error fetching SMS messages:", err);
+      setError(err instanceof Error ? err.message : "Unknown error fetching SMS messages");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     const createNotificationChannel = async () => {
       try {
@@ -57,6 +117,9 @@ const SmsListener = () => {
 
           console.log("Parsed SMS Data:", smsData);
 
+          // Update local state with the new message
+          setSmsMessages(prevMessages => [smsData, ...prevMessages]);
+
           LocalNotifications.schedule({
             notifications: [
               {
@@ -101,6 +164,9 @@ const SmsListener = () => {
         // Setup SMS listener
         const cleanupSmsListener = setupSmsListener();
 
+        // Initial fetch of SMS messages
+        await fetchMessages();
+
         // Add app state change listener
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const stateChangeListener = await App.addListener("appStateChange", (state: any) => {
@@ -110,6 +176,8 @@ const SmsListener = () => {
           if (state.isActive) {
             cleanupSmsListener();
             setupSmsListener();
+            // Refresh SMS messages when app comes back to foreground
+            fetchMessages();
           }
         });
 
@@ -128,7 +196,7 @@ const SmsListener = () => {
 
     // Cleanup on component unmount
     return () => {
-      cleanup.then(cleanupFn => cleanupFn && cleanupFn());
+      cleanup?.then(cleanupFn => cleanupFn && cleanupFn());
     };
   }, []);
 
