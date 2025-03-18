@@ -184,4 +184,4 @@ def email_vet():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=6942)
+    app.run(debug=True, port=5002)
